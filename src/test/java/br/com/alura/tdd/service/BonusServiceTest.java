@@ -14,9 +14,18 @@ class BonusServiceTest {
 	@Test
 	void bonusDeveriaSerZeroParaFuncionarioComSalarioMuitoAlto() {
 		BonusService service = new BonusService();
-		BigDecimal bonus = service.calcularBonus(new Funcionario("Rodrigo", LocalDate.now(), new BigDecimal("25000")));
+		//abaixo temos a forma de como JUnit espera pela Exception
+		//assertThrows(IllegalArgumentException.class, () -> service.calcularBonus(new Funcionario("Rodrigo", LocalDate.now(), new BigDecimal("25000"))));
 	
-		assertEquals(new BigDecimal("0.00"), bonus);
+		//Segunda forma de fazer o JUnit esperar a Exception
+		try {
+			service.calcularBonus(new Funcionario("Rodrigo", LocalDate.now(), new BigDecimal("25000")));
+			fail("Não deu a exception!");//método do JUnit para forçar que o teste falhou
+		} catch (Exception e) {
+			//Verificando se a mensagem que chegou aqui na Exception é a mesma que declarei no IllegalArgumentException
+			assertEquals("Funcionário com salario maior que 10000 não recebe bonus!", e.getMessage());
+		}
+		
 	}
 	
 	@Test
