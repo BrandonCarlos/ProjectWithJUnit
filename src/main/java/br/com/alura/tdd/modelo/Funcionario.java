@@ -43,9 +43,15 @@ public class Funcionario {
 	}
 
 	public void reajustarSalario(BigDecimal reajuste) {
-		//abaixo temos o "salario atual + reajuste"
-		this.salario = this.salario.add(reajuste).setScale(2, RoundingMode.HALF_UP);//dentro dos atributos temos o método add();
-		//método setScale ajuda a arredondarmos o valor
+		this.salario = this.salario.add(reajuste);
+		arredondarSalario();
+	}
+
+	//método "privado" não podemos chamar , o que poderemos chamar é o método acima "reajustarSalario(BigDecimal reajuste)"
+	private void arredondarSalario() {
+		//abaixo estamos fazer o arredondamento do salario novamente, pois pode ser que precisemos deste
+		//método mais vezes e ai não precisamos reescrever está linha e sim apenas chamar o método arredondarSalario()
+		this.salario = this.salario.setScale(2, RoundingMode.HALF_UP);
 	}
 
 
